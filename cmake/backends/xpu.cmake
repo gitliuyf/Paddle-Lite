@@ -39,6 +39,18 @@ if (NOT XPU_SDK_ENV)
   endif ()
 endif ()
 
+if (XPU_PLUGIN_ROOT)
+  set (XPU_INCLUDE_DIR "${XPU_PLUGIN_ROOT}/include" CACHE PATH "xpu include directory" FORCE)
+  set (XPUPLUGIN_LIB      "${XPU_PLUGIN_ROOT}/so/libxpuplugin.so" CACHE FILEPATH "libxpuplugin.so" FORCE)
+endif ()
+include_directories (${XPU_INCLUDE_DIR})
+
+if (XPU_PLUGIN_ROOT)
+  add_library (xpuplugin SHARED IMPORTED GLOBAL)
+endif ()
+set_property (TARGET xpuplugin PROPERTY IMPORTED_LOCATION ${XPUPLUGIN_LIB})
+
+
 if (NOT XPU_XDNN_URL)
   set (XPU_XDNN_URL "${XPU_SDK_URL}/xdnn-${XPU_SDK_ENV}.tar.gz")
 endif ()

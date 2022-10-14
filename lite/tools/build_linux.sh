@@ -78,6 +78,7 @@ KUNLUNXIN_XPU_XDNN_URL=""
 KUNLUNXIN_XPU_XRE_URL=""
 KUNLUNXIN_XPU_SDK_ENV=""
 KUNLUNXIN_XPU_SDK_ROOT=""
+KUNLUNXIN_XPU_PLUGIN_ROOT=""
 # options of compiling intel fpga.
 WITH_INTEL_FPGA=OFF
 INTEL_FPGA_SDK_ROOT="$(pwd)/intel_fpga_sdk"
@@ -203,6 +204,7 @@ function init_cmake_mutable_options {
                         -DXPU_XRE_URL=$KUNLUNXIN_XPU_XRE_URL \
                         -DXPU_SDK_ENV=$KUNLUNXIN_XPU_SDK_ENV \
                         -DXPU_SDK_ROOT=$KUNLUNXIN_XPU_SDK_ROOT \
+                        -DXPU_PLUGIN_ROOT=$KUNLUNXIN_XPU_PLUGIN_ROOT \
                         -DLITE_WITH_TRAIN=$WITH_TRAIN  \
                         -DLITE_WITH_NNADAPTER=$WITH_NNADAPTER \
                         -DNNADAPTER_WITH_ROCKCHIP_NPU=$NNADAPTER_WITH_ROCKCHIP_NPU \
@@ -454,6 +456,7 @@ function print_usage {
     echo -e "|     --kunlunxin_xpu_sdk_env: (bdcentos_x86_64|centos7_x86_64|ubuntu_x86_64|kylin_aarch64) optional,                                                  |"
     echo -e "|             default is bdcentos_x86_64(if x86) / kylin_aarch64(if arm)                                                                               |"
     echo -e "|     --kunlunxin_xpu_sdk_root: (path to kunlunxin_xpu DDK file) optional, default is None                                                             |"
+    echo -e "|     --kunlunxin_xpu_plugin_root: (path to kunlunxin_xpu plugin so file) optional, default is None                                                             |"
     echo -e "|  detailed information about Paddle-Lite KUNLUNXIN XPU:  https://paddle-lite.readthedocs.io/zh/latest/demo_guides/kunlunxin_xpu.html                  |"
     echo "--------------------------------------------------------------------------------------------------------------------------------------------------------"
     echo
@@ -699,6 +702,13 @@ function main {
                 fi
                 shift
                 ;;
+            --baidu_xpu_plugin_root=*)
+                KUNLUNXIN_XPU_PLUGIN_ROOT="${i#*=}"
+                if [ -n "${KUNLUNXIN_XPU_PLUGIN_ROOT}" ]; then
+                    KUNLUNXIN_XPU_PLUGIN_ROOT=$(readlink -f ${KUNLUNXIN_XPU_PLUGIN_ROOT})
+                fi
+                shift
+                ;;
             --baidu_xpu_sdk_url=*)
                 KUNLUNXIN_XPU_SDK_URL="${i#*=}"
                 shift
@@ -731,6 +741,13 @@ function main {
                 KUNLUNXIN_XPU_SDK_ROOT="${i#*=}"
                 if [ -n "${KUNLUNXIN_XPU_SDK_ROOT}" ]; then
                     KUNLUNXIN_XPU_SDK_ROOT=$(readlink -f ${KUNLUNXIN_XPU_SDK_ROOT})
+                fi
+                shift
+                ;;
+            --kunlunxin_xpu_plugin_root=*)
+                KUNLUNXIN_XPU_PLUGIN_ROOT="${i#*=}"
+                if [ -n "${KUNLUNXIN_XPU_PLUGIN_ROOT}" ]; then
+                    KUNLUNXIN_XPU_PLUGIN_ROOT=$(readlink -f ${KUNLUNXIN_XPU_PLUGIN_ROOT})
                 fi
                 shift
                 ;;

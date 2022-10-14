@@ -2293,6 +2293,29 @@ struct RollParam : ParamBase {
   std::vector<int64_t> axis{};
 };
 
+/// ----------------------- plugin operators ----------------------
+struct PluginParam : ParamBase {
+  const lite::Tensor* X{};
+  const lite::Tensor* Y{};
+  lite::Tensor* Out{};
+  int axis{-1};  // for broadcasting.
+  int computesize;  //for plugin add
+
+  // //for test
+  //   // for int8
+  // WITH_INT8_CONFIG
+  // float x_input_scale{1.0f};
+  // float y_input_scale{1.0f};
+  // // fuse ScaleParam
+  // bool fuse_scale{false};
+  // float scale{1.f};
+  // float bias{0.f};
+  // bool bias_after_scale{true};
+  // float alpha{6.f};
+  // std::string activation_type{""};
+
+};
+
 }  // namespace operators
 }  // namespace lite
 }  // namespace paddle

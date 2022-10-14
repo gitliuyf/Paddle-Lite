@@ -1,4 +1,4 @@
-// Copyright (c) 2019 PaddlePaddle Authors. All Rights Reserved.
+// Copyright (c) 2022 PaddlePaddle Authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,15 +14,25 @@
 
 #pragma once
 
-#pragma GCC system_header
-#include <xpu/runtime.h>
-#include <xpu/xdnn.h>
-#include <xdnn_plugin.h>
+#include "lite/core/kernel.h"
 
 namespace paddle {
 namespace lite {
+namespace kernels {
+namespace xpu {
 
-namespace xdnn = baidu::xpu::api;
+template <class T, class Functor, PrecisionType PType>
+class PluginCompute : public KernelLite<TARGET(kXPU), PType> {
+ public:
+  using param_t = operators::PluginParam;
 
+  virtual void Run();
+
+  virtual ~PluginCompute() = default;
+};
+
+}  // namespace xpu
+}  // namespace kernels
 }  // namespace lite
 }  // namespace paddle
+

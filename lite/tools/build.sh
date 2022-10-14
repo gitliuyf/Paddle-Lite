@@ -38,6 +38,7 @@ NPU_DDK_ROOT="$(pwd)/ai_ddk_lib/" # Download HiAI DDK from https://developer.hua
 BUILD_XPU=OFF
 BUILD_XTCL=OFF
 XPU_SDK_ROOT=""
+XPU_PLUGIN_ROOT=""
 XPU_SDK_URL=""
 XPU_SDK_ENV=""
 BUILD_APU=OFF
@@ -227,6 +228,7 @@ function make_tiny_publish_so {
       -DLITE_WITH_XPU=$BUILD_XPU \
       -DLITE_WITH_XTCL=$BUILD_XTCL \
       -DXPU_SDK_ROOT=$XPU_SDK_ROOT \
+      -DXPU_PLUGIN_ROOT=$XPU_PLUGIN_ROOT \
       -DXPU_SDK_URL=$XPU_SDK_URL \
       -DXPU_SDK_ENV=$XPU_SDK_ENV \
       -DLITE_WITH_APU=$BUILD_APU \
@@ -346,6 +348,7 @@ function make_full_publish_so {
       -DLITE_WITH_XPU=$BUILD_XPU \
       -DLITE_WITH_XTCL=$BUILD_XTCL \
       -DXPU_SDK_ROOT=$XPU_SDK_ROOT \
+      -DXPU_PLUGIN_ROOT=$XPU_PLUGIN_ROOT \
       -DXPU_SDK_URL=$XPU_SDK_URL \
       -DXPU_SDK_ENV=$XPU_SDK_ENV \
       -DLITE_WITH_RKNPU=$BUILD_RKNPU \
@@ -425,6 +428,7 @@ function make_all_tests {
       -DLITE_WITH_XPU=$BUILD_XPU \
       -DLITE_WITH_XTCL=$BUILD_XTCL \
       -DXPU_SDK_ROOT=$XPU_SDK_ROOT \
+      -DXPU_PLUGIN_ROOT=$XPU_PLUGIN_ROOT \
       -DXPU_SDK_URL=$XPU_SDK_URL \
       -DXPU_SDK_ENV=$XPU_SDK_ENV \
       -DLITE_WITH_APU=$BUILD_APU \
@@ -512,6 +516,7 @@ function make_cuda {
             -DLITE_WITH_XPU=$BUILD_XPU \
             -DLITE_WITH_XTCL=$BUILD_XTCL \
             -DXPU_SDK_ROOT=$XPU_SDK_ROOT \
+            -DXPU_PLUGIN_ROOT=$XPU_PLUGIN_ROOT \
             -DXPU_SDK_URL=$XPU_SDK_URL \
             -DXPU_SDK_ENV=$XPU_SDK_ENV
 
@@ -566,6 +571,7 @@ function make_x86 {
             -DLITE_WITH_XPU=$BUILD_XPU \
             -DLITE_WITH_XTCL=$BUILD_XTCL \
             -DXPU_SDK_ROOT=$XPU_SDK_ROOT \
+            -DXPU_PLUGIN_ROOT=$XPU_PLUGIN_ROOT \
             -DXPU_SDK_URL=$XPU_SDK_URL \
             -DXPU_SDK_ENV=$XPU_SDK_ENV \
             -DCMAKE_BUILD_TYPE=Release \
@@ -631,6 +637,7 @@ function make_x86_tests {
             -DLITE_WITH_XPU=$BUILD_XPU \
             -DLITE_WITH_XTCL=$BUILD_XTCL \
             -DXPU_SDK_ROOT=$XPU_SDK_ROOT \
+            -DXPU_PLUGIN_ROOT=$XPU_PLUGIN_ROOT \
             -DXPU_SDK_URL=$XPU_SDK_URL \
             -DXPU_SDK_ENV=$XPU_SDK_ENV \
             -DCMAKE_BUILD_TYPE=Debug \
@@ -838,6 +845,13 @@ function main {
                 XPU_SDK_ROOT=${i#*=}
                 if [ -n "${XPU_SDK_ROOT}" ]; then
                     XPU_SDK_ROOT=$(readlink -f ${XPU_SDK_ROOT})
+                fi
+                shift
+                ;;
+            --xpu_plugin_root=*)
+                XPU_PLUGIN_ROOT=${i#*=}
+                if [ -n "${XPU_PLUGIN_ROOT}" ]; then
+                    XPU_PLUGIN_ROOT=$(readlink -f ${XPU_PLUGIN_ROOT})
                 fi
                 shift
                 ;;
