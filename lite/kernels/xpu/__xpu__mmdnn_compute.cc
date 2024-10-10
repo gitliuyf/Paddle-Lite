@@ -1112,7 +1112,7 @@ void XPUMmdnnBidEmbGrnnAttCompute2::Run() {
   int table_m = param.emb_tbl->dims()[0];
   int embed_dim = param.emb_tbl->dims()[1];
 
-  int r = xdnn::embedding<float, int64_t>(
+  int r = xdnn::paddle_embedding<float, int64_t>(
       ctx.GetRawContext(),
       param.emb_tbl->data<float>(),
       param.id0->data<int64_t>(),
@@ -1122,6 +1122,7 @@ void XPUMmdnnBidEmbGrnnAttCompute2::Run() {
       num,
       128000);
   CHECK_EQ(r, 0);
+
 }
 
 class XPUMmdnnBidEmbAttCompute

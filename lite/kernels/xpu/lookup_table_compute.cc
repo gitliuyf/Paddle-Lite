@@ -30,7 +30,7 @@ void LookupTableCompute<WType, IDType, PType>::Run() {
   int xm = param.W->dims()[0];
   int n = param.W->dims()[1];
 
-  int r = xdnn::embedding<WType, IDType>(
+  int r = xdnn::paddle_embedding<WType, IDType>(
       ctx.GetRawContext(), /* context */
       param.W->template data<WType>(),
       param.Ids->template data<IDType>(),
